@@ -1,0 +1,15 @@
+{
+  green: '#009900',
+  blaze: '#FF661A',
+  brown: '#663300',
+  black: '#000000',
+  white: '#FFFFFF',
+  cyan: '#00FFFF',
+  yellow: '#FFFF00',
+  gold: '#FFDF00',
+  silver: '#C0C0C0',
+  copper: '#B87333',
+  pink: '#FF007F',
+  peach: '#FFE5B4',
+  gray: '#808080',
+}
