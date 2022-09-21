@@ -1,7 +1,7 @@
 import { ReactElement, useEffect, useState } from 'react'
 import {
-  Box, Button, Grid, GridItem, Heading, Link, Stack,
-  StackProps, Text, Tooltip,
+  Box, Button, Flex, Grid, GridItem, Heading,
+  Link, Stack, StackProps, Text, Tooltip,
 } from '@chakra-ui/react'
 import { useImmer } from 'use-immer'
 import JSON5 from 'json5'
@@ -153,21 +153,26 @@ export default () => {
 
   return (
     <Stack mx={15}>
-      <Text textAlign="center">
-        This interface is to align the 13 sets of 13 things that combine to form the 13 teams of
-        <Link
-          href="https://discord.gg/xuwe6rxAzg" isExternal
-          textDecoration="underline"
-          ml={1}
-          _hover={{ borderBottom: '1px dashed' }}
-        >Yggdrasil</Link>.
-      </Text>
+      <Flex>
+        <object style={{ maxHeight: '30vh' }} data="Yggdrasil.svg">Yggdrasil</object>
+        <Text textAlign="center">
+          This interface is to align the 13 sets of 13 things that combine to form the 13 teams of
+          <Link
+            href="https://discord.gg/xuwe6rxAzg" isExternal
+            textDecoration="underline"
+            ml={1}
+            _hover={{ borderBottom: '1px dashed' }}
+          >Yggdrasil</Link>.
+        </Text>
+        <object style={{ maxHeight: '30vh' }} data="pie.svg">Yggdrasil</object>
+        <object style={{ maxHeight: '30vh' }} data="13%20Norse%20Settings.svg">The Tree</object>
+      </Flex>
       <Grid
         isolation="isolate"
         templateColumns={`repeat(${Object.keys(axes).length}, 0fr)`}
       >
         {Object.entries(src).map(([type, entries], idx) => {
-          let MaybeTooltip = ({ label = '', children }: TooltipProps) => (
+          let MaybeTooltip = ({ children }: TooltipProps) => (
             <>{children}</>
           )
           if(Object.keys(details).includes(type)) {

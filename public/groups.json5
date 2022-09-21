@@ -162,6 +162,7 @@
     'Five Up & Down',
     'Contiguous Days',
     'International Fixed',
+    '24 Solar Terms',
   ],
   captains: [
     'δυς β.',
@@ -175,5 +176,7 @@
     'garages',
     'skyscrapers',
     'flea market',
+    'parks',
+    'bridges',
   ]
 }
