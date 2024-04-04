@@ -1,8 +1,6 @@
-import { ReactElement, useEffect, useState } from 'react'
 import {
-  Box, Button, Flex, Grid, GridItem, Heading,
-  Link, Stack, StackProps, Text, Tooltip,
-} from '@chakra-ui/react'
+  HTMLAttributes, ReactElement, useEffect, useState,
+} from 'react'
 import { useImmer } from 'use-immer'
 import JSON5 from 'json5'
 
@@ -24,8 +22,7 @@ interface TooltipProps {
   children: ReactElement | ReactElement[] | string
 }
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default () => {
+export const Lists = () => {
   const [data, setData] = useState<Data>({})
   const [axes, setAxes] = (
     useImmer<Record<string, string[]>>({})
@@ -88,16 +85,19 @@ export default () => {
   const download = () => {
     const json = new Blob(
       [JSON5.stringify(axes, null, 2)],
-      { type: 'application/json5' }
+      { type: 'application/json5' },
     )
     window.open(URL.createObjectURL(json))
   }
 
-  const SortOn = ({ column, ...props }: StackProps & { column: string }) => {
+  const SortOn = (
+    { column, ...props }:
+    HTMLAttributes<HTMLDivElement> & { column: string }
+  ) => {
     const sort = (sortAsc = true) => {
       setSortAsc(sortAsc)
       setSortOn(column)
-      setDynAxes((axes) => {
+      setDynAxes((axes: Record<string, string[]>) => {
         const seen: Record<string, number> = {}
         const orig = [...axes[column]]
         let sorted = [...axes[column]].sort()
@@ -118,22 +118,33 @@ export default () => {
       })
     }
     return (
-      <Stack align="center" {...props}>
-        <Box
+      <div
+        style={{ display: 'grid', placeItems: 'center' }}
+        {...props}
+      >
+        <div
           title={`Sort on ${column} ascending`}
-          opacity={sortOn === column && sortAsc ? 1 : 0.5}
+          style={{
+            opacity: sortOn === column && sortAsc ? 1 : 0.5,
+            margin: 0,
+            padding: 0,
+            cursor: 'n-resize',
+            lineHeight: 0.75,
+          }}
           onClick={() => sort(true)}
-          m={0} p={0} cursor="n-resize"
-          lineHeight={0.75}
-        >▴</Box>
-        <Box
+        >▴</div>
+        <div
           title={`Sort on ${column} descending`}
-          opacity={sortOn === column && !sortAsc ? 1 : 0.5}
+          style={{
+            opacity: sortOn === column && !sortAsc ? 1 : 0.5,
+            margin: 0,
+            padding: 0,
+            cursor: 's-resize',
+            lineHeight: 0.75,
+          }}
           onClick={() => sort(false)}
-          m="0 !important" p={0} cursor="s-resize"
-          lineHeight={0.75}
-        >▾</Box>
-      </Stack>
+        >▾</div>
+      </div>
     )
   }
 
@@ -141,7 +152,7 @@ export default () => {
     if(!dragStart) {
       setAxes(dynAxes)
     } else if(dragStart.x === dragOver?.x) {
-      setDynAxes((dynAxes) => {
+      setDynAxes((dynAxes: Record<string, string[]>) => {
         const orig = [...Object.values(axes)[dragStart.x - 1]]
         const hold = orig[dragStart.y - 1]
         orig[dragStart.y - 1] = orig[dragOver.y - 1]
@@ -152,24 +163,29 @@ export default () => {
   }, [dragStart, dragOver, axes, dynAxes, setAxes, setDynAxes])
 
   return (
-    <Stack mx={15}>
-      <Flex>
+    <section style={{ marginInline: 15 }}>
+      <header style={{ display: 'flex', justifyContent: 'space-between' }}>
         <object style={{ maxHeight: '30vh' }} data="Yggdrasil.svg">Yggdrasil</object>
-        <Text textAlign="center">
+        <p style={{ textAlign: 'center' }}>
           This interface is to align the 13 sets of 13 things that combine to form the 13 teams of
-          <Link
-            href="https://discord.gg/xuwe6rxAzg" isExternal
-            textDecoration="underline"
-            ml={1}
-            _hover={{ borderBottom: '1px dashed' }}
-          >Yggdrasil</Link>.
-        </Text>
+          <a
+            href="https://notes.trwb.live"
+            target="_blank"
+            style={{
+              textDecoration: 'underline',
+              marginLeft: 1,
+            }}
+            // _hover={{ borderBottom: '1px dashed' }}
+          >Yggdrasil</a>.
+        </p>
         <object style={{ maxHeight: '30vh' }} data="pie.svg">Yggdrasil</object>
-        <object style={{ maxHeight: '30vh' }} data="13%20Norse%20Settings.svg">The Tree</object>
-      </Flex>
-      <Grid
-        isolation="isolate"
-        templateColumns={`repeat(${Object.keys(axes).length}, 0fr)`}
+        {/* <object style={{ maxHeight: '30vh' }} data="13%20Norse%20Settings.svg">The Tree</object> */}
+      </header>
+      <main
+        style={{
+          display: 'grid',
+          gridTemplateColumns: `repeat(${Object.keys(axes).length}, 0fr)`,
+        }}
       >
         {Object.entries(src).map(([type, entries], idx) => {
           let MaybeTooltip = ({ children }: TooltipProps) => (
@@ -177,35 +193,51 @@ export default () => {
           )
           if(Object.keys(details).includes(type)) {
             MaybeTooltip = ({ label, children }: TooltipProps) => (
-              <Tooltip {...{ label }}>{children}</Tooltip>
+              <span title={label}>{children}</span>
             )
           }
 
           return (
-            <Stack key={idx} display="contents">
-              <GridItem gridColumn={idx + 1} gridRow={1}>
-                <Heading
-                  mx={2} mb={0} fontSize={20} textAlign="center"
-                  textTransform="capitalize"
+            <ul key={idx} style={{ display: 'contents', listStyle: 'none' }}>
+              <li style={{ display: 'flex' }}>
+                <h3
+                  style={{
+                    marginInline: '0.25rem',
+                    marginBlock: 0,
+                    fontSize: 20,
+                    textAlign: 'center',
+                    textTransform: 'capitalize',
+                  }}
                 >
                   {type}
-                </Heading>
-                <SortOn column={type} m="0 !important"/>
-              </GridItem>
+                </h3>
+                <SortOn column={type}/>
+              </li>
               {Array.from({ length: height }).map(
                 (_, iidx) => {
                   const entry = entries[iidx]
                   return (
-                    <GridItem
-                      mixBlendMode="color"
+                    <li
                       key={`${idx}:${iidx}`}
-                      px={5} py={1} whiteSpace="pre" mt="0 !important"
-                      gridColumn={idx + 1} gridRow={iidx + 2}
+                      style={{
+                        mixBlendMode: 'color',
+                        paddingInline: 5,
+                        paddingBlock: 1,
+                        whiteSpace: 'pre',
+                        marginTop: '0',
+                        gridColumn: idx + 1,
+                        gridRow: iidx + 2,
+                        background: (
+                          data?.colors?.[src.colors[iidx].toLowerCase()]
+                        ),
+                      }}
                       draggable={true}
-                      bg={data?.colors?.[src.colors[iidx].toLowerCase()]}
-                      onDragStart={() => setDragStart({
-                        x: idx + 1, y: iidx + 1,
-                      })}
+                      onDragStart={() => {
+                        console.debug('Drag Start')
+                        setDragStart({
+                          x: idx + 1, y: iidx + 1,
+                        })
+                      }}
                       onDragEnd={() => setDragStart(null)}
                       onDragEnter={() => setDragOver({
                         x: idx + 1, y: iidx + 1,
@@ -215,15 +247,17 @@ export default () => {
                       <MaybeTooltip label={details[type]?.[entry.toLowerCase()]}>
                         {entry}
                       </MaybeTooltip>
-                    </GridItem>
+                    </li>
                   )
                 }
               )}
-            </Stack>
+            </ul>
           )
         })}
-      </Grid>
-      <Button onClick={download} title="Download">↯</Button>
-    </Stack>
+      </main>
+      <button onClick={download} title="Download">↯</button>
+    </section>
   )
 }
+
+export default Lists
