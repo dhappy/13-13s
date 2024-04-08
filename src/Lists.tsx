@@ -1,4 +1,4 @@
-import {
+import React, {
   HTMLAttributes, ReactElement, useEffect, useState,
 } from 'react'
 import { useImmer } from 'use-immer'
@@ -53,11 +53,9 @@ export const Lists = () => {
       const data = Object.fromEntries(
         await Promise.all(sources.map(
           async (src) => {
-            const filename = `${src}.json5`
-            let body
             try {
-              const res = await fetch(filename)
-              body = await res.text()
+              const res = await fetch(`${src}.json5`)
+              const body = await res.text()
               return [src, JSON5.parse(body)]
             } catch(error) {
               return [src, null]
@@ -82,6 +80,24 @@ export const Lists = () => {
     load()
   }, [setAxes, setDynAxes])
 
+  const invert = (color: string, base = 16) => {
+    const digits = (
+      Array.from({ length: base }).map((_,i) => i.toString(base))
+    )
+    const map = Object.fromEntries(
+      digits.map((digit: string, idx: number) => (
+        [digit, digits.toReversed()[idx]]
+      ))
+    )
+    return (
+      color
+      .toLowerCase()
+      .split('')
+      .map((digit) => digit in map ? map[digit] : digit)
+      .join('')
+    )
+  }
+
   const download = () => {
     const json = new Blob(
       [JSON5.stringify(axes, null, 2)],
@@ -101,11 +117,12 @@ export const Lists = () => {
         const seen: Record<string, number> = {}
         const orig = [...axes[column]]
         let sorted = [...axes[column]].sort()
-        if(column === 'months') {
-          sorted = Object.keys(data.months ?? {}) // unicode sort order misplaces ⛎
+        if(column === 'months' && data.months) {
+          // unicode sort order misplaces ⛎
+          sorted = Object.keys(data.months)
         }
         if(sortAsc) {
-          sorted = sorted.reverse()
+          sorted.reverse()
         }
         const idxs = sorted.map((entry) => (
           seen[entry] = orig.indexOf(
@@ -152,32 +169,36 @@ export const Lists = () => {
     if(!dragStart) {
       setAxes(dynAxes)
     } else if(dragStart.x === dragOver?.x) {
-      setDynAxes((dynAxes: Record<string, string[]>) => {
-        const orig = [...Object.values(axes)[dragStart.x - 1]]
-        const hold = orig[dragStart.y - 1]
-        orig[dragStart.y - 1] = orig[dragOver.y - 1]
-        orig[dragOver.y - 1] = hold
-        dynAxes[Object.keys(dynAxes)[dragStart.x - 1]] = orig
-      })
+      const column = Object.keys(dynAxes)[dragStart.x - 1]
+      const orig = [...Object.values(axes)[dragStart.x - 1]]
+      const hold = orig[dragStart.y - 1]
+      orig[dragStart.y - 1] = orig[dragOver.y - 1]
+      orig[dragOver.y - 1] = hold
+      if(dynAxes[column][dragStart.y - 1] !== orig[dragStart.y - 1]) {
+        setDynAxes((dynAxes) => { dynAxes[column] = orig })
+      }
     }
   }, [dragStart, dragOver, axes, dynAxes, setAxes, setDynAxes])
 
   return (
     <section style={{ marginInline: 15 }}>
       <header style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <object style={{ maxHeight: '30vh' }} data="Yggdrasil.svg">Yggdrasil</object>
-        <p style={{ textAlign: 'center' }}>
-          This interface is to align the 13 sets of 13 things that combine to form the 13 teams of
-          <a
-            href="https://notes.trwb.live"
-            target="_blank"
-            style={{
-              textDecoration: 'underline',
-              marginLeft: 1,
-            }}
-            // _hover={{ borderBottom: '1px dashed' }}
-          >Yggdrasil</a>.
-        </p>
+        <object style={{ maxHeight: '30vh' }} data="Yggdrasil%20w⁄%20Text.svg">Yggdrasil</object>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <p style={{ textAlign: 'center' }}>
+            This interface is to align the 13 sets of 13 things that combine to form the 13 teams of{' '}
+            <a
+              href="https://notes.trwb.live"
+              target="_blank"
+              style={{
+                textDecoration: 'underline',
+                marginLeft: 1,
+              }}
+              // _hover={{ borderBottom: '1px dashed' }}
+            >Yggdrasil</a>.
+          </p>
+          <button onClick={download}>Download</button>
+        </div>
         <object style={{ maxHeight: '30vh' }} data="pie.svg">Yggdrasil</object>
         {/* <object style={{ maxHeight: '30vh' }} data="13%20Norse%20Settings.svg">The Tree</object> */}
       </header>
@@ -216,33 +237,44 @@ export const Lists = () => {
               {Array.from({ length: height }).map(
                 (_, iidx) => {
                   const entry = entries[iidx]
+                  const color = (
+                    data?.colors?.[src.colors[iidx].toLowerCase()]
+                    ?? '#000'
+                  )
                   return (
                     <li
                       key={`${idx}:${iidx}`}
                       style={{
-                        mixBlendMode: 'color',
-                        paddingInline: 5,
+                        mixBlendMode: 'difference',
+                        // filter: 'invert(100%)',
+                        // backdropFilter: 'invert(100%)',
+                        WebkitTextStroke: '0.5px black',
+                        fontWeight: 'bold',
+                        paddingInline: '0.1rem',
                         paddingBlock: 1,
                         whiteSpace: 'pre',
                         marginTop: '0',
                         gridColumn: idx + 1,
                         gridRow: iidx + 2,
-                        background: (
-                          data?.colors?.[src.colors[iidx].toLowerCase()]
-                        ),
+                        backgroundColor: color,
+                        color: invert(color),
                       }}
                       draggable={true}
                       onDragStart={() => {
-                        console.debug('Drag Start')
                         setDragStart({
                           x: idx + 1, y: iidx + 1,
                         })
                       }}
                       onDragEnd={() => setDragStart(null)}
-                      onDragEnter={() => setDragOver({
-                        x: idx + 1, y: iidx + 1,
-                      })}
-                      onDragLeave={() => setDragOver(null)}
+                      onDragEnter={() => {
+                        setDragOver({
+                          x: idx + 1, y: iidx + 1,
+                        })
+                      }}
+                      // onDragLeave={() => {
+                      //   console.debug({ m: 'Drag Leave', x: idx + 1, y: iidx + 1 })
+                      //   setDragOver(null)
+                      // }}
                     >
                       <MaybeTooltip label={details[type]?.[entry.toLowerCase()]}>
                         {entry}
