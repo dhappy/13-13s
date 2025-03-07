@@ -98,12 +98,68 @@ export const Lists = () => {
     )
   }
 
-  const download = () => {
+  function download({ url, name }: { url: string, name: string }) {
+    const a = document.createElement('a')
+    a.href = url
+    a.download = name
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+  }
+
+  const downloadArray = () => {
     const json = new Blob(
       [JSON5.stringify(axes, null, 2)],
       { type: 'application/json5' },
     )
-    window.open(URL.createObjectURL(json))
+    download({
+      url: URL.createObjectURL(json),
+      name: 'Yggdrasil.by groups.json5',
+    })
+  }
+  const downloadObject = () => {
+    const out = []
+    for(const idx in Array.from({
+      length: Object.keys(axes).length
+    })) {
+      const collect = {}
+      for(const [type, entries] of Object.entries(axes)) {
+        collect[type] = entries[idx]
+      }
+      out.push(collect)
+    }
+    const json = new Blob(
+      [JSON5.stringify(out, null, 2)],
+      { type: 'application/json5' },
+    )
+    download({
+      url: URL.createObjectURL(json),
+      name: 'Yggdrasil.by teams.json5',
+    })
+  }
+
+  const load = (file: File) => {
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      const data = JSON5.parse(e.target?.result as string)
+      if(Array.isArray(data)) {
+        const keys = Array.from(new Set([
+          ...data.map((datum) => Object.keys(datum)).flat()
+        ]))
+        const loaded = {}
+        for(const set of data) {
+          for(const key of keys) {
+            loaded[key] ??= []
+            loaded[key].push(set[key] ?? '')
+          }
+        }
+        console.debug({ loaded })
+        setAxes(loaded)
+      } else {
+        setAxes(data)
+      }
+    }
+    reader.readAsText(file)
   }
 
   const SortOn = (
@@ -181,10 +237,10 @@ export const Lists = () => {
   }, [dragStart, dragOver, axes, dynAxes, setAxes, setDynAxes])
 
   return (
-    <section style={{ marginInline: 15 }}>
+    <section style={{ marginInline: 15, display: 'flex', flexDirection: 'column' }}>
       <header style={{ display: 'flex', justifyContent: 'space-between' }}>
         <object style={{ maxHeight: '30vh' }} data="Yggdrasil%20w⁄%20Text.svg">Yggdrasil</object>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <p style={{ textAlign: 'center' }}>
             This interface is to align the 13 sets of 13 things that combine to form the 13 teams of{' '}
             <a
@@ -197,15 +253,29 @@ export const Lists = () => {
               // _hover={{ borderBottom: '1px dashed' }}
             >Yggdrasil</a>.
           </p>
-          <button onClick={download}>Download</button>
+          <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+            <button onClick={downloadArray}>Download Group Sorted</button>
+            <button onClick={downloadObject}>Download Team Sorted</button>
+          </div>
+          <label style={{ marginTop: '2rem' }}>
+            Load Configuration:{' '}
+            <input
+              type="file"
+              accept=".json5"
+              onChange={({ target: { files } }) => {
+                if(files && files.length > 0) load(files[0])
+              }}
+            />
+          </label>
         </div>
-        <object style={{ maxHeight: '30vh' }} data="pie.svg">Yggdrasil</object>
+        <object style={{ maxHeight: '30vh', background: 'transparent' }} data="pie.svg" wmode="transparent">Yggdrasil</object>
         {/* <object style={{ maxHeight: '30vh' }} data="13%20Norse%20Settings.svg">The Tree</object> */}
       </header>
       <main
         style={{
           display: 'grid',
           gridTemplateColumns: `repeat(${Object.keys(axes).length}, 0fr)`,
+          marginInline: 'auto',
         }}
       >
         {Object.entries(src).map(([type, entries], idx) => {
@@ -287,7 +357,7 @@ export const Lists = () => {
           )
         })}
       </main>
-      <button onClick={download} title="Download">↯</button>
+      <button onClick={downloadObject} title="Download">↯</button>
     </section>
   )
 }

@@ -1,7 +1,7 @@
 import Lists from './Lists'
 
 export const App = () => (
-  <article style={{ justifySelf: 'center' }}>
+  <article style={{ justifyContent: 'center', width: '100%' }}>
     <Lists/>
   </article>
 )

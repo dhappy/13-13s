@@ -4,9 +4,12 @@
 <svg
    version="1.1"
    viewBox="0 0 9052.6065 6952.0586"
-   sodipodi:docname="Yggdrasil paths.svg"
-   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   sodipodi:docname="Yggdrasil w⁄ Text.svg"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
    id="svg7674"
+   inkscape:export-filename="Yggdrasil w⁄ Text.png"
+   inkscape:export-xdpi="39.130001"
+   inkscape:export-ydpi="39.130001"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -565,20 +568,23 @@
      showgrid="false"
      showguides="true"
      inkscape:zoom="0.070800002"
-     inkscape:cx="4053.6722"
+     inkscape:cx="4046.6101"
      inkscape:cy="3156.7796"
      inkscape:window-width="1978"
      inkscape:window-height="1227"
      inkscape:window-x="232"
-     inkscape:window-y="129"
+     inkscape:window-y="280"
      inkscape:window-maximized="0"
-     inkscape:current-layer="g12">
+     inkscape:current-layer="g4927"
+     inkscape:export-bgcolor="#8ed5da00">
     <inkscape:page
        x="0"
        y="0"
        id="page8"
        width="9052.6064"
-       height="6952.0586" />
+       height="6952.0586"
+       margin="0"
+       bleed="0" />
     <sodipodi:guide
        position="6318.3342,2112.9844"
        orientation="0,-1"
@@ -876,14 +882,14 @@
         <g
            pos="center"
            id="white"
-           style="opacity:1;fill:#ffffff;fill-opacity:0.893377"
+           style="opacity:1;fill:#ffffff;fill-opacity:0.55547017"
            transform="translate(0.29420846,-0.5233853)">
           <path
              layer="base"
              idx="9"
              d="M 91.83,91.33 105,82.71 c 0,0 3.017,-0.8111 3.019,-2.752 7.9e-4,-1.18926 0.53007,-1.864556 1.15009,-2.785029 0.16617,-0.246702 0.33887,-0.63698 0.50965,-0.908797 -0.71999,-1.607651 -1.15044,-2.582813 -2.29568,-4.508395 -1.593,-1.955 -4.41015,-4.983842 -6.15078,-7.183633 L 95.677,53.148 101.67379,45.539485 103.02,44.993 l 12.37,-3.9193 3.84275,14.054512 0.76086,1.193362 1.08687,-0.626488 15.44452,-0.05769 3.88048,14.337686 c 0,0 2.31461,7.276869 8.08632,8.627768 0.67382,0.157714 1.18945,0.550327 1.97948,0.530532 7.11649,-0.08257 6.67873,-14.062398 5.75962,-14.916813 -0.0748,-0.255484 -0.0853,-3.628208 -0.0853,-3.8731 0,-0.8879 3.82039,-7.900073 3.82039,-7.900073 l 8.04428,3.009986 1.38972,0.08661 9.744,-9.489 9.101,6.997 0.96528,0.625386 9.46572,1.788614 -1.36448,8.660707 c 0,0 -1.95425,2.894851 -1.09824,5.001679 L 197.3,70.42 l 7.9457,7.594 -4.99926,12.427584 C 196.44402,92.270151 182.2137,98.402 170.5437,122.244 c -1.24366,7.33978 -0.91541,18.11491 10.26162,27.1228 5.815,6.78 16.57575,12.70941 19.61377,15.15835 -0.2447,0.8712 -2.18339,8.18785 -2.18339,8.18785 l -12.0414,-2.56106 -1.0536,0.93606 -6.075,8.273 -13.47729,-3.20803 -1.46071,0.60433 c -0.4735,0.6317 -7.434,9.527 -7.434,9.527 l -12.94603,-6.35502 -1.01347,-0.0571 -6.4165,4.20303 -5.71,-4.573 c -5.51625,-6.18651 -15.21915,-6.15146 -21.09,0.2511 l -4.508,2.922 -1.268,-3.927 -0.9201,-0.43093 -5.8609,0.17973 -1.806004,-4.9615 -1.457996,-1.3165 -6.027,0.2511 1.981647,-7.83 -0.5022,-0.7534 -4.743647,0.0452 1.969775,-4.94726 c 4.714628,-4.13304 14.282045,-17.37424 15.543465,-22.8149 -1.44951,-7.69997 -2.108646,-11.53935 -2.544392,-14.53206 -0.689598,-4.73616 -0.542199,-8.36452 0.848352,-13.45578 z"
              id="path188"
-             style="fill:#ffffff;fill-opacity:0.893377"
+             style="fill:#ffffff;fill-opacity:0.55547017"
              sodipodi:nodetypes="cccsccccccccccccsccscccccccccccccccccccccccccccccccccccccccscc" />
         </g>
       </g>
