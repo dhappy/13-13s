@@ -1,0 +1,23 @@
+<svg id="svg36" version="1.1" viewBox="0 0 1206.2 1201.8" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g id="g51" transform="translate(350.32 -472.58)" fill="#cedce7" style="paint-order:stroke fill markers;stroke-width:11.7;stroke:#ad6100">
+    <path id="path8" d="m299.77 479.35c8.985-1.1659 21.993 1.3407 29.804 5.6631 19.48 10.78 31.372 33.657 29.192 55.845-1.153 11.738-4.028 22.79-9.595 33.303-2.466-2.382-6.6478-5.7084-9.3948-7.8834l-12.759-11.936c7.604-17.595 3.067-40.368-17.425-45.639-16.4-4.2176-35.113 3.4951-47.568 13.974-18.31 19.673-36.69 38.453-55.986 57.101-6.01-8.343-9.981-13.409-15.082-22.656 6.1962-5.9364 14.085-11.644 32.607-28.749 22.384-20.334 43.836-46.346 76.207-49.023z" style="paint-order:stroke fill markers;stroke-width:11.7;stroke:#ad6100"/>
+    <path id="path16" d="m366.49 634.93c-24.978-29.33-58.178-46.316-107.36-101.66 7.14-6.6073 10.203-9.0369 18.528-14.034 30.174 28.885 64.378 53.204 93.945 82.768" style="paint-order:stroke fill markers;stroke-width:11.7;stroke:#ad6100"/>
+    <path id="path16-5" d="m146.44 635.69 30.272-30.887-16.222-19.415-19.887 16.654" style="paint-order:stroke fill markers;stroke-width:11.7;stroke:#ad6100"/>
+    <path id="path4" d="m203.17 478.6c14.969-1.4213 35.698 7.3781 48.107 15.739-6.763 5.5845-15.038 13.712-21.471 19.776-5.289-2.6907-10.745-4.8146-16.594-5.8762-16.927-3.0727-29.65 7.4878-32.283 24.008-1.077 7.2137-0.321 14.582 2.198 21.427 11.342 31.412 63.722 76.592 72.529 89.222 13.556-13.552 36.923-37.79 49.749-55.522 4.809 4.809 11.349 9.792 16.682 15.042 1.165 1.151 2.345 2.399 3.494 3.577-23.986 33.476-52.661 57.455-69.176 75.545-5.4916-4.9984-81.777-74.978-99.873-121.42-1.958-5.054-3.228-10.349-3.775-15.742-1.774-16.039 2.494-32.896 12.722-45.513 9.399-11.461 22.947-18.743 37.691-20.261z" style="paint-order:stroke fill markers;stroke-width:11.7;stroke:#ad6100"/>
+  </g>
+  <g id="g104">
+    <use id="use51" transform="rotate(27.731 607.73 598.97)" xlink:href="#g51"/>
+    <use id="use52" transform="rotate(56.055 607.8 593.33)" xlink:href="#g51"/>
+    <use id="use53" transform="rotate(82.526 603.7 600.98)" xlink:href="#g51"/>
+    <use id="use56" transform="rotate(110.58 605.74 600.72)" xlink:href="#g51"/>
+    <use id="use57" transform="rotate(138.64 606.24 599.74)" xlink:href="#g51"/>
+    <use id="use58" transform="rotate(26.548 590.66 584.4)" xlink:href="#use57"/>
+    <use id="use59" transform="rotate(193.85 604.96 603.24)" xlink:href="#g51"/>
+    <use id="use60" transform="rotate(221.69 605.89 602.98)" xlink:href="#g51"/>
+    <use id="use61" transform="rotate(248.98 604.17 601.66)" xlink:href="#g51"/>
+    <use id="use63" transform="rotate(-83.116 604.36 602.73)" xlink:href="#g51"/>
+    <use id="use64" xlink:href="#g51"/>
+    <use id="use65" transform="rotate(28.778 586.16 599.98)" xlink:href="#use63"/>
+    <use id="use66" transform="rotate(-27.116 613.1 610.08)" xlink:href="#use64"/>
+  </g>
+</svg>
