@@ -15,7 +15,9 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/">
+   xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+   style="background: transparent"
+>
   <title>13 Slice Pie</title>
   <defs
      id="defs6">
