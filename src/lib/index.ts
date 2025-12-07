@@ -25,3 +25,21 @@ export function download({ url, name }: { url: string, name: string }) {
   document.body.removeChild(a)
 }
 
+export function luminance(r: number, g: number, b: number) {
+  const [rs, gs, bs] = [r, g, b].map((c) => {
+    c = c / 255;
+    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)
+  })
+
+  return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs
+}
+
+export function contrastColor(hexColor: `#${string}`) {
+  const width = hexColor.length <= 4 ? 1 : 2
+  let pos = 1
+  const r = parseInt(hexColor.slice(pos, pos += width), 16)
+  const g = parseInt(hexColor.slice(pos, pos += width), 16)
+  const b = parseInt(hexColor.slice(pos, pos += width), 16)
+
+  return luminance(r, g, b) > 0.179 ? '#000' : '#FFF'
+}

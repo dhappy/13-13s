@@ -2,7 +2,7 @@
   import JSON5 from 'json5'
   import { onMount } from 'svelte'
   import type { Team, Point, MetaInfo, Config } from '$lib/types'
-  import { download, invert } from '$lib'
+  import { contrastColor, download, invert } from '$lib'
   import SortSelect from './SortSelect.svelte'
 
   let teams = $state<Array<Team>>([])
@@ -120,7 +120,7 @@
         {#if !closed[col]}
           <li
             style:background-color={color}
-            style:color={invert(color)}
+            style:color={contrastColor(color as `#${string}`)}
             draggable={true}
             ondragstart={() => dragStart = here}
             ondragend={() => {
@@ -157,7 +157,9 @@
                 }}
               />
             {:else}
-              <button>
+              <button
+                interestfor="{id}-card"
+              >
                 {#if dragStart?.x === colIdx && to}
                   {teams?.[dragStart.y][col]}
                 {:else if dragOver?.x === colIdx && from}
@@ -167,7 +169,7 @@
                 {/if}
               </button>
               {#if detail}
-                <dialog open id="{id}-card">
+                <dialog id="{id}-card" popover="hint">
                   {detail}
                 </dialog>
               {/if}
@@ -190,8 +192,6 @@
       list-style: none;
 
       li {
-        mix-blend-mode: difference;
-        -webkit-text-stroke: 0.5px black;
         padding: 0.1rem;
         white-space: pre;
         margin-top: 0;
@@ -205,21 +205,25 @@
         }
 
         & dialog {
-          display: none;
           position: absolute;
-          bottom: 0;
+          bottom: -25%;
           left: 75%;
           z-index: 3;
+          width: max-content;
           max-width: 30ch;
           background-color: light-dark(#CCC, #222);
           color: light-dark(#222, #CCC);
-        }
-
-        &:hover dialog {
-          display: inline-block;
+          white-space: normal;
+          text-indent: -1em;
+          padding-inline-start: 2em;
+          padding-inline-end: 1em;
+          padding-block: 0.5em;
         }
 
         & button {
+          position: relative;
+          color: inherit;
+          paint-order: stroke fill;
           background: transparent;
           border: none;
           font-size: inherit;
